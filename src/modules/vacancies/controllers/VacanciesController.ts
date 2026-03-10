@@ -37,7 +37,7 @@ class VacanciesController {
       user_id,
     });
 
-    return res.json(vacancy);
+    return res.status(201).json(vacancy);
   }
 
   public async apply(req: Request, res: Response): Promise<Response> {
@@ -56,12 +56,13 @@ class VacanciesController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const requester_id = req.user.id;
 
     const deleteVacancy = new DeleteVacancyService();
 
-    await deleteVacancy.execute(id);
+    await deleteVacancy.execute(id, requester_id);
 
-    return res.json();
+    return res.status(204).send();
   }
 }
 

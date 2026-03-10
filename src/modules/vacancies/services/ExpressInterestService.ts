@@ -24,6 +24,10 @@ class ExpressInterestService {
       throw new AppError('User not found', 404);
     }
 
+    if (vacancy.user_id === user_id) {
+      throw new AppError('You cannot apply to your own vacancy', 403);
+    }
+
     vacancy.interested_users = vacancy.interested_users || [];
 
     const isUserInterested = vacancy.interested_users.some(
@@ -31,7 +35,7 @@ class ExpressInterestService {
     );
 
     if (isUserInterested) {
-      throw new AppError('User is already interested in this vacancy');
+      throw new AppError('User is already interested in this vacancy', 409);
     }
 
     if (!isUserInterested) {

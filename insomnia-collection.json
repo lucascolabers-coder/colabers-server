@@ -1,0 +1,230 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-03-10T15:15:00.000Z",
+  "__export_source": "codex",
+  "resources": [
+    {
+      "_id": "wrk_colabers",
+      "_type": "workspace",
+      "name": "Colabers API",
+      "description": "Collection for Colabers API"
+    },
+    {
+      "_id": "env_colabers_base",
+      "_type": "environment",
+      "parentId": "wrk_colabers",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3333",
+        "token": "",
+        "user_id": "",
+        "vacancy_id": ""
+      }
+    },
+    {
+      "_id": "fld_users",
+      "_type": "request_group",
+      "parentId": "wrk_colabers",
+      "name": "Users"
+    },
+    {
+      "_id": "fld_sessions",
+      "_type": "request_group",
+      "parentId": "wrk_colabers",
+      "name": "Sessions"
+    },
+    {
+      "_id": "fld_vacancies",
+      "_type": "request_group",
+      "parentId": "wrk_colabers",
+      "name": "Vacancies"
+    },
+    {
+      "_id": "req_users_create",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Create User",
+      "method": "POST",
+      "url": "{{ _.base_url }}/users",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Lucas\",\n  \"email\": \"lucas@example.com\",\n  \"password\": \"123456\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_users_list",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "List Users",
+      "method": "GET",
+      "url": "{{ _.base_url }}/users",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_users_show",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Show User",
+      "method": "GET",
+      "url": "{{ _.base_url }}/users/{{ _.user_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_users_update",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Update User",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/users",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Lucas Updated\",\n  \"email\": \"lucas@example.com\",\n  \"user_type\": \"developer\",\n  \"user_objective\": \"find opportunities\",\n  \"old_password\": \"123456\",\n  \"password\": \"1234567\",\n  \"password_confirmation\": \"1234567\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_users_delete",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Delete User",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/users/{{ _.user_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_sessions_create",
+      "_type": "request",
+      "parentId": "fld_sessions",
+      "name": "Create Session",
+      "method": "POST",
+      "url": "{{ _.base_url }}/sessions",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"lucas@example.com\",\n  \"password\": \"123456\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_vacancies_create",
+      "_type": "request",
+      "parentId": "fld_vacancies",
+      "name": "Create Vacancy",
+      "method": "POST",
+      "url": "{{ _.base_url }}/vacancies",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Backend Node\",\n  \"description\": \"API em Node.js\",\n  \"requirements\": \"TypeScript, PostgreSQL\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_vacancies_list",
+      "_type": "request",
+      "parentId": "fld_vacancies",
+      "name": "List Vacancies",
+      "method": "GET",
+      "url": "{{ _.base_url }}/vacancies",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_vacancies_show",
+      "_type": "request",
+      "parentId": "fld_vacancies",
+      "name": "Show Vacancy",
+      "method": "GET",
+      "url": "{{ _.base_url }}/vacancies/{{ _.vacancy_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_vacancies_apply",
+      "_type": "request",
+      "parentId": "fld_vacancies",
+      "name": "Apply Vacancy",
+      "method": "POST",
+      "url": "{{ _.base_url }}/vacancies/apply",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vacancy_id\": \"{{ _.vacancy_id }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_vacancies_delete",
+      "_type": "request",
+      "parentId": "fld_vacancies",
+      "name": "Delete Vacancy",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/vacancies/{{ _.vacancy_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    }
+  ]
+}

@@ -8,19 +8,21 @@ import { instanceToInstance } from 'class-transformer';
 
 export default class UsersController {
   public async index(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const listUser = new ListUserService();
 
-    const users = await listUser.execute();
+    const user = await listUser.execute(user_id);
 
-    return res.json(instanceToInstance(users));
+    return res.json(instanceToInstance(user));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const requester_id = req.user.id;
 
     const showUser = new ShowUserService();
 
-    const user = await showUser.execute(id);
+    const user = await showUser.execute(id, requester_id);
 
     return res.json(instanceToInstance(user));
   }
@@ -32,7 +34,7 @@ export default class UsersController {
 
     const user = await createUser.execute({ name, email, password });
 
-    return res.json(instanceToInstance(user));
+    return res.status(201).json(instanceToInstance(user));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -57,11 +59,12 @@ export default class UsersController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const requester_id = req.user.id;
 
     const deleteUser = new DeleteUserService();
 
-    await deleteUser.execute(id);
+    await deleteUser.execute(id, requester_id);
 
-    return res.json();
+    return res.status(204).send();
   }
 }
